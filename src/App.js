@@ -4,6 +4,9 @@ import Web3 from 'web3';
 import './App.css';
 import Login from './Login';
 import Register from './Register';
+import BuyerHome from './BuyerHome';
+import SellerHome from './SellerHome';
+import ExpertHome from './ExpertHome';
 
 
 function Home({ connectWallet, account}) {
@@ -98,6 +101,11 @@ function App() {
         <Route path ="/register" element={<Register />} />
 
         <Route path="/login" element={<Login />} />
+        <Route path="/buyer-home" element={<BuyerHome />} />
+
+        <Route path="/seller-home" element={<SellerHome />} />
+
+        <Route path="/expert-home" element={<ExpertHome />} />
       </Routes>
     </div>
     </Router>

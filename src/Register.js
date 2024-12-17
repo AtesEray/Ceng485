@@ -10,6 +10,7 @@ function Register() {
     email: '',
     password: '',
     birthDate: '',
+    role: '',
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -19,49 +20,31 @@ function Register() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const calculateAge = (birthDate) => {
-    const today = new Date();
-    const birthDateObj = new Date(birthDate);
-    let age = today.getFullYear() - birthDateObj.getFullYear();
-    const monthDiff = today.getMonth() - birthDateObj.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
-      age--;
+  const handleRegister = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert('Registration successful!');
+        navigate('/login');
+      } else {
+        setError(data.error || 'Registration failed.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Something went wrong.');
     }
-    return age;
-  };
-
-  const handleRegister = () => {
-    const { name, surname, phone, email, password, birthDate } = formData;
-
-    // Boş alan kontrolü
-    if (!name || !surname || !phone || !email || !password || !birthDate) {
-      setError('Please fill all blank spaces');
-      return;
-    }
-    
-
-    // Yaş kontrolü
-    const age = calculateAge(birthDate);
-    if (age < 18) {
-      setError('You must be at least 18 years old to register.');
-      return;
-    }
-
-    // Tüm doğrulamalardan geçtiğinde
-    setError('');
-    alert('Registration Successful!');
-    console.log('Registered User:', formData);
-    navigate('/login');
   };
 
   return (
     <div className="container">
       <h2 className="title">Register</h2>
-
-      {/* Hata Mesajı */}
       {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
-
-      {/* Form Alanları */}
       <input
         type="text"
         name="name"
@@ -109,8 +92,17 @@ function Register() {
         onChange={handleInputChange}
         className="file-input"
       />
-
-      {/* Butonlar */}
+      <select
+        name="role"
+        value={formData.role}
+        onChange={handleInputChange}
+        className="file-input"
+      >
+        <option value="">Select your role</option>
+        <option value="buyer">Buyer Person (Buyer)</option>
+        <option value="seller">Seller Person (Seller)</option>
+        <option value="expert">Auto Exper Firm (Expert)</option>
+      </select>
       <button className="button" onClick={handleRegister}>
         Register
       </button>
