@@ -31,6 +31,16 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.get('/users', async (req, res) => {
+    try {
+        const users = await User.find({}, '-password'); // Şifreyi göstermemek için çıkarıyoruz
+        res.status(200).json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch users.' });
+    }
+});
+
 // Kullanıcı giriş
 router.post('/login', async (req, res) => {
     try {
