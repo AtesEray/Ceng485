@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoutes = require('./auth');
-const uploadRoutes = require('./upload'); // Import upload routes
+const uploadRoutes = require('./upload'); // Import the upload routes
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,8 +19,8 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/upload', uploadRoutes); // Add upload route
+app.use('/api/auth', authRoutes);  // Auth routes
+app.use('/api/upload', uploadRoutes);  // Upload routes
 
 // Start Server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

@@ -1,0 +1,89 @@
+{
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "plateNumber",
+            "type": "string"
+          }
+        ],
+        "name": "registerVehicle",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          }
+        ],
+        "name": "getVehicle",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getVehicles",
+        "outputs": [
+          {
+            "internalType": "string[]",
+            "name": "",
+            "type": "string[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],
+    "bytecode": "0x608060405234801561001057600080fd5b5061012e806100206000396000f3fe608060405234801561001057600080fd5b5061012e806100206000396000f3fe",
+    "deployedBytecode": "0x608060405234801561001057600080fd5b5061012e806100206000396000f3fe",
+    "sourceMap": "25:42:0:0:0:1:1",
+    "deployedSourceMap": "25:42:0:0:0:1:1",
+    "linkReferences": {},
+    "object": "contract"
+  }
+  

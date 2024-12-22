@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function UploadReport() {
   const [file, setFile] = useState(null);  // Store the selected file
   const [fileList, setFileList] = useState([]);  // Store the list of uploaded files
+  const [loading, setLoading] = useState(false);  // Handle loading state
   const navigate = useNavigate();
 
   // Fetch the list of files when the component loads
@@ -15,6 +16,7 @@ function UploadReport() {
           const data = await response.json();
           setFileList(data);  // Update the file list state
         } else {
+          console.error('Failed to fetch files');
           alert('Failed to fetch files');
         }
       } catch (error) {
@@ -42,6 +44,8 @@ function UploadReport() {
     formData.append("file", file);  // Append the selected file to the form data
 
     try {
+      setLoading(true);  // Show loading state
+
       const response = await fetch("http://localhost:5000/upload", {
         method: "POST",
         body: formData,
@@ -49,7 +53,7 @@ function UploadReport() {
 
       if (response.ok) {
         const newFile = await response.json();  // Get the file name from the response
-        setFileList((prevList) => [...prevList, newFile.file]);  // Update the file list with new file
+        setFileList((prevList) => [...prevList, newFile.fileName]);  // Update the file list
         alert("File uploaded successfully!");
       } else {
         const errorMessage = await response.text();
@@ -58,6 +62,8 @@ function UploadReport() {
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("An error occurred during upload.");
+    } finally {
+      setLoading(false);  // Hide loading state
     }
   };
 
@@ -75,8 +81,9 @@ function UploadReport() {
         <button
           className="button"
           onClick={handleUpload}  // Trigger the upload function
+          disabled={loading}
         >
-          Upload
+          {loading ? 'Uploading...' : 'Upload'}
         </button>
       </div>
 
