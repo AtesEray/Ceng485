@@ -22,3 +22,24 @@ app.use('/api/auth', authRoutes);
 
 // Server Başlat
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+
+//////////////////////// I P F S ////////////////////////////////
+const express = require('express');
+const { uploadToIPFS } = require('./services/ipfsService');
+
+const app = express();
+app.use(express.json());
+
+app.post('/upload', async (req, res) => {
+  const { data } = req.body; // Veriyi alın
+  try {
+    const ipfsHash = await uploadToIPFS(data);
+    res.json({ success: true, ipfsHash });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+
