@@ -8,6 +8,18 @@ import BuyerHome from './BuyerHome';
 import SellerHome from './SellerHome';
 import ExpertHome from './ExpertHome';
 
+import React from 'react';
+import UploadToIPFS from './UploadToIPFS'; ////////////IPFS
+import DownloadFromIPFS from './DownloadFromIPFS'; /////////////IPFS
+
+const App = () => (                        ///////////IPFS
+  <div>                                   ////////////IPFS
+    <h1>IPFS Integration</h1>                
+    <UploadToIPFS />                      /////////IPFS
+    <DownloadFromIPFS />                  ////////IPFS
+  </div>                             
+);                                         //////IPFS
+
 
 function Home({ connectWallet, account}) {
   const navigate = useNavigate();
