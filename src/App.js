@@ -52,18 +52,31 @@ function App() {
 
   const connectWallet = async () => {
     if (window.ethereum) {
-      const web3 = new Web3(window.ethereum);
-      try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const accounts = await web3.eth.getAccounts();
-        setAccount(accounts[0]);
-      } catch (error) {
-        console.error("Connect wallet is unsuccessful", error);
-      }
+        const web3 = new Web3(window.ethereum); // Initialize Web3 with MetaMask provider
+        try {
+            // Request account access
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+            // Get the list of accounts
+            const accounts = await web3.eth.getAccounts();
+
+            // Set the first account as the connected account
+            setAccount(accounts[0]);
+        } catch (error) {
+            if (error.code === 4001) {
+                // User rejected the connection request
+                console.error("User rejected the wallet connection request.");
+                alert("Wallet connection was rejected. Please try again.");
+            } else {
+                // Other errors
+                console.error("Error connecting to wallet:", error);
+            }
+        }
     } else {
-      alert("Please download MetaMask");
+        // MetaMask is not installed
+        alert("MetaMask is not installed. Please install MetaMask to connect.");
     }
-  };
+};
 
   return (
     <Router>

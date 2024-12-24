@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { initWeb3, initContract } from './utils/web3Utils';
+import { initWeb3 } from './utils/web3Utils'; // Removed initContract
 import OwnerABI from './contracts/Owner.json';
 
 const BuyerDashboard = () => {
-    const [web3, setWeb3] = useState(null);
-    const [contract, setContract] = useState(null);
     const [account, setAccount] = useState(null);
     const [vehicleData, setVehicleData] = useState(null);
 
@@ -12,14 +10,12 @@ const BuyerDashboard = () => {
         const initialize = async () => {
             try {
                 const web3Instance = await initWeb3();
-                setWeb3(web3Instance);
 
                 const accounts = await web3Instance.eth.getAccounts();
                 setAccount(accounts[0]);
 
-                const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your contract address
-                const contractInstance = initContract(OwnerABI.abi, contractAddress);
-                setContract(contractInstance);
+                const contractAddress = '0x39b7B68e3e89d1dbBd8001a0806c411abBab7f13'; // Replace with your deployed contract address
+                const contractInstance = new web3Instance.eth.Contract(OwnerABI.abi, contractAddress);
 
                 // Fetch vehicle data as an example
                 const vehicle = await contractInstance.methods.getVehicle('VIN123').call();
@@ -39,9 +35,9 @@ const BuyerDashboard = () => {
             {vehicleData ? (
                 <div>
                     <h2>Vehicle Information</h2>
-                    <p>VIN: {vehicleData.vin}</p>
-                    <p>Plate Number: {vehicleData.plateNumber}</p>
-                    <p>Owner: {vehicleData.owner}</p>
+                    <p>VIN: {vehicleData.vin || 'N/A'}</p>
+                    <p>Plate Number: {vehicleData.plateNumber || 'N/A'}</p>
+                    <p>Owner: {vehicleData.owner || 'N/A'}</p>
                 </div>
             ) : (
                 <p>Loading vehicle information...</p>
