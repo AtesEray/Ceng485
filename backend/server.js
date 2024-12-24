@@ -32,7 +32,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/upload', async (req, res) => {
-  const { data } = req.body; // Veriyi alın
+  const { data } = req.body; 
   try {
     const ipfsHash = await uploadToIPFS(data);
     res.json({ success: true, ipfsHash });
@@ -43,3 +43,19 @@ app.post('/upload', async (req, res) => {
 
 app.listen(3000, () => console.log('Server running on port 3000'));
 
+const fetch = require('node-fetch'); 
+
+app.get('/download/:hash', async (req, res) => {
+  const { hash } = req.params; 
+  try {
+    const url = `https://ipfs.infura.io/ipfs/${hash}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('IPFS fetch failed');
+    }
+    const data = await response.text(); 
+    res.send(data); 
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
