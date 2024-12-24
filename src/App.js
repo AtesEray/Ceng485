@@ -7,7 +7,8 @@ import Register from './Register';
 import BuyerHome from './BuyerHome';
 import SellerHome from './SellerHome';
 import ExpertHome from './ExpertHome';
-import UploadReportPage from './UploadReportPage'; // Import the UploadReportPage component
+
+
 
 function Home({ connectWallet, account }) {
   const navigate = useNavigate();
@@ -17,21 +18,19 @@ function Home({ connectWallet, account }) {
       {account ? (
         <p className="connected"> Connected Account: {account}</p>
       ) : (
-        <button className="button" onClick={connectWallet}> Connect Wallet </button>
+        <button 
+          className="button" 
+          onClick={connectWallet}> 
+          
+          Connect Wallet 
+          </button>
       )}
       <br />
-      <button
-        className="button third"
-        onClick={() => navigate('/upload')}
-        style={{ marginTop: '20px' }}
-      >
-        Go To Upload Report Page
-      </button>
-      <br />
+      
       <button
         className="button secondary"
         onClick={() => navigate('/login')}
-        style={{ marginTop: '10px' }}
+        style={{ marginTop: '1px' }}
       >
         Login Page
       </button>
@@ -39,7 +38,7 @@ function Home({ connectWallet, account }) {
       <button
         className="button secondary"
         onClick={() => navigate('/register')}
-        style={{ marginTop: '10px' }}
+        style={{ marginTop: '1px' }}
       >
         Register Page
       </button>
@@ -87,7 +86,7 @@ function App() {
             path="/"
             element={<Home connectWallet={connectWallet} account={account} />}
           />
-          <Route path="/upload" element={<UploadReportPage />} /> 
+          
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/buyer-home" element={<BuyerHome />} />

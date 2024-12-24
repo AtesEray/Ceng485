@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs'); // Eksik import eklendi
 const jwt = require('jsonwebtoken');
 const User = require('./User');
 const router = express.Router();
+const axios = require('axios');
 
 // Kullanıcı kayıt
 router.post('/register', async (req, res) => {
@@ -40,6 +41,18 @@ router.get('/users', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch users.' });
     }
 });
+// Yeni bir route oluştur
+router.get('/external-data', async (req, res) => {
+    try {
+      const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+      res.json(response.data); // Frontend'e gönder
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).send('Error fetching data');
+    }
+  });
+  
+  module.exports = router;
 
 // Kullanıcı giriş
 router.post('/login', async (req, res) => {
