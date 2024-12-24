@@ -87,7 +87,7 @@ function App() {
             path="/"
             element={<Home connectWallet={connectWallet} account={account} />}
           />
-          <Route path="/upload" element={<UploadReportPage />} /> {/* Updated to use UploadReportPage */}
+          <Route path="/upload" element={<UploadReportPage />} /> 
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/buyer-home" element={<BuyerHome />} />

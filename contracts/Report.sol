@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+
 // Contract to manage reports
 contract Report {
     struct ReportDetails {
