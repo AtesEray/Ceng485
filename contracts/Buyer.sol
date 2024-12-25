@@ -34,6 +34,7 @@ contract Buyer {
         ownerContract = Owner(ownerContractAddress);
     }
 
+    // Buy a vehicle by VIN
     function buyVehicle(string memory vin) public payable {
         Seller.Listing memory listing = sellerContract.listings(vin);
         require(listing.isActive, "Vehicle not listed for sale");
@@ -47,14 +48,14 @@ contract Buyer {
         purchases[vin] = Purchase(vin, listing.price, msg.sender);
         sellerContract.cancelListing(vin);
 
-        // Transfer funds
+        // Transfer funds to the seller
         (bool success, ) = vehicleOwner.call{value: msg.value}("");
         require(success, "Transfer failed");
 
         emit VehiclePurchased(vin, msg.sender, listing.price);
     }
 
-    // Prevent accidental direct payments
+    // Prevent accidental direct payments to the contract
     receive() external payable {
         revert("Direct payments not allowed");
     }
