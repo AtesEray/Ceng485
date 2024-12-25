@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import sellerABI from '../contracts/Seller.json'; // Import the correct ABI for Seller contract
 
-const sellerContractAddress = "0xYourSellerContractAddress"; // Replace with actual seller contract address
+const sellerContractAddress = "0x17d86102230B5944D9c5F34ed4D88DB64207c86E"; // Replace with actual seller contract address
 
 const SellerDashboard = () => {
   const [web3, setWeb3] = useState(null);
@@ -11,6 +11,7 @@ const SellerDashboard = () => {
   const [vin, setVin] = useState('');
   const [vehicleListing, setVehicleListing] = useState(null);
   const [error, setError] = useState(null);
+
 
   // Web3 and contract initialization
   useEffect(() => {
@@ -54,7 +55,7 @@ const SellerDashboard = () => {
       }
 
       setVehicleListing({
-        vin,
+        vin ,
         price: listingData.price,
         isActive: listingData.isActive,
       });
