@@ -2,21 +2,55 @@
     "abi": [
       {
         "inputs": [
-          { "internalType": "string", "name": "vin", "type": "string" }
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          }
         ],
         "name": "listings",
         "outputs": [
-          { "internalType": "uint256", "name": "price", "type": "uint256" },
-          { "internalType": "bool", "name": "isActive", "type": "bool" }
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          }
         ],
         "stateMutability": "view",
         "type": "function"
       },
       {
         "inputs": [
-          { "internalType": "string", "name": "vin", "type": "string" }
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          }
         ],
         "name": "cancelListing",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          }
+        ],
+        "name": "createListing",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
