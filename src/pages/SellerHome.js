@@ -12,6 +12,7 @@ const SellerDashboard = () => {
   const [vehicleListing, setVehicleListing] = useState(null);
   const [error, setError] = useState(null);
 
+  console.log(vin);
 
   // Web3 and contract initialization
   useEffect(() => {
