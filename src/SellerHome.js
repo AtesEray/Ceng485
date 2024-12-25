@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { initWeb3, initContract } from './utils/web3Utils'; // Web3 ve kontrat fonksiyonları
-import SellerABI from './contracts/Owner.json'; // Satıcıya özel akıllı kontrat ABI'si
+import { initWeb3, initContract } from './utils/web3Utils'; // Use both initWeb3 and initContract
+import BuyerABI from './contracts/Buyer.json'; // Import Buyer contract ABI
+import OwnerABI from './contracts/Owner.json'; // Import Owner contract ABI (if you are fetching vehicle data from the Owner contract)
 
-const SellerDashboard = () => {
+const BuyerDashboard = () => {
     const [account, setAccount] = useState(null);
-    const [vehicles, setVehicles] = useState([]);
+    const [vehicleData, setVehicleData] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
+    // Initialize Web3, contracts, and vehicle data
     useEffect(() => {
         const initialize = async () => {
             try {
-                // Web3 bağlantısını başlat
+                // Initialize web3
                 const web3 = await initWeb3();
 
-                // Kullanıcının hesap bilgilerini al
+                // Fetch connected accounts
                 const accounts = await web3.eth.getAccounts();
                 setAccount(accounts[0]);
 
-                // Akıllı kontrata bağlan
-                const contractAddress = '0xYourSellerContractAddress'; // Kontrat adresinizi girin
-                const contract = initContract(SellerABI.abi, contractAddress);
+                // Initialize Buyer contract
+                const buyerContractAddress = '0xYourBuyerContractAddress'; // Replace with the deployed Buyer contract address
+                const buyerContract = initContract(BuyerABI.abi, buyerContractAddress);
 
-                // Satıcıya ait araç listesini al
-                const sellerVehicles = await contract.methods.getSellerVehicles(accounts[0]).call();
-                const formattedVehicles = sellerVehicles.map((vehicle) => ({
-                    vin: vehicle[0],
-                    plateNumber: vehicle[1],
-                }));
-
-                setVehicles(formattedVehicles);
+                // Example: Fetch purchase details for a specific VIN (VIN123 in this case)
+                const purchase = await buyerContract.methods.purchases('VIN123').call();
+                setVehicleData({
+                    vin: purchase.vin,
+                    price: web3.utils.fromWei(purchase.price, 'ether'),
+                    buyer: purchase.buyer,
+                });
             } catch (error) {
                 setErrorMessage(error.message);
                 console.error('Error initializing:', error);
@@ -38,26 +39,48 @@ const SellerDashboard = () => {
         initialize();
     }, []);
 
+    // Function to handle buying a vehicle
+    const buyVehicle = async () => {
+        try {
+            const web3 = await initWeb3();
+            const buyerContractAddress = '0xYourBuyerContractAddress'; // Replace with the deployed address
+            const buyerContract = initContract(BuyerABI.abi, buyerContractAddress);
+
+            const vin = 'VIN123'; // Replace with dynamic VIN if needed
+            const priceInWei = web3.utils.toWei('1', 'ether'); // Replace with actual price (ETH)
+
+            // Call buyVehicle function from the contract
+            await buyerContract.methods.buyVehicle(vin).send({
+                from: account,
+                value: priceInWei,
+            });
+
+            alert('Vehicle purchased successfully!');
+        } catch (error) {
+            setErrorMessage(error.message);
+            console.error('Error purchasing vehicle:', error);
+        }
+    };
+
     return (
         <div>
-            <h1>Seller Dashboard</h1>
+            <h1>Buyer Dashboard</h1>
             {errorMessage && <p style={{ color: 'red' }}>Error: {errorMessage}</p>}
             <p>Account: {account}</p>
-            <h2>Your Vehicles</h2>
-            {vehicles.length > 0 ? (
-                <ul>
-                    {vehicles.map((vehicle, index) => (
-                        <li key={index}>
-                            <p>VIN: {vehicle.vin}</p>
-                            <p>Plate Number: {vehicle.plateNumber}</p>
-                        </li>
-                    ))}
-                </ul>
+
+            {vehicleData ? (
+                <div>
+                    <h2>Vehicle Information</h2>
+                    <p>VIN: {vehicleData.vin}</p>
+                    <p>Price: {vehicleData.price} ETH</p>
+                    <p>Buyer: {vehicleData.buyer}</p>
+                    <button onClick={buyVehicle}>Buy Vehicle</button>
+                </div>
             ) : (
-                <p>No vehicles found for this seller.</p>
+                <p>Loading vehicle information...</p>
             )}
         </div>
     );
 };
 
-export default SellerDashboard;
+export default BuyerDashboard;

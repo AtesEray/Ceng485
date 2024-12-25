@@ -1,0 +1,69 @@
+{
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "reportHash",
+            "type": "string"
+          }
+        ],
+        "name": "createReport",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          }
+        ],
+        "name": "getReport",
+        "outputs": [
+          {
+            "internalType": "struct Report.ReportDetails",
+            "name": "",
+            "type": "tuple",
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "vin",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "reportHash",
+                "type": "string"
+              },
+              {
+                "internalType": "address",
+                "name": "inspector",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "timestamp",
+                "type": "uint256"
+              }
+            ]
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
+  }
+  

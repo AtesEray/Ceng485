@@ -1,0 +1,70 @@
+{
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sellerContractAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "ownerContractAddress",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          }
+        ],
+        "name": "buyVehicle",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "receive",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "receive"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          }
+        ],
+        "name": "purchases",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "vin",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "buyer",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
+  }
+  
