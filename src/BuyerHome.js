@@ -1,59 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import { initWeb3, initContract } from './utils/web3Utils'; // Use both initWeb3 and initContract
-import OwnerABI from './contracts/Owner.json';
+import React, { useEffect, useState } from 'react';
+import Web3 from 'web3';
+import ownerABI from './contracts/Owner.json'; // Doğru klasörden ABI'yi import edin
 
-const BuyerDashboard = () => {
-    const [account, setAccount] = useState(null);
-    const [vehicleData, setVehicleData] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('');
+// Kontrat adresinizi buraya ekleyin
+const ownerContractAddress = "0xYourContractAddress"; // Owner kontratının gerçek adresi
 
-    useEffect(() => {
-        const initialize = async () => {
-            try {
-                // Initialize web3
-                const web3 = await initWeb3();
+const BuyerHome = () => {
+  const [web3, setWeb3] = useState(null);
+  const [account, setAccount] = useState(null);
+  const [ownerContract, setOwnerContract] = useState(null);
+  const [vin, setVin] = useState('');
+  const [vehicleInfo, setVehicleInfo] = useState(null);
+  const [error, setError] = useState(null);
 
-                // Fetch connected accounts
-                const accounts = await web3.eth.getAccounts();
-                setAccount(accounts[0]);
+  // Web3 ve kontrat bağlantısını başlatma
+  useEffect(() => {
+    const initWeb3 = async () => {
+      try {
+        if (window.ethereum) {
+          const web3Instance = new Web3(window.ethereum);
+          const accounts = await web3Instance.eth.requestAccounts();
+          setWeb3(web3Instance);
+          setAccount(accounts[0]);
+  
+          // Owner kontrat nesnesini başlatma
+          const owner = new web3Instance.eth.Contract(ownerABI.abi, ownerContractAddress); // Eğer ownerABI içinde abi varsa
+          // Eğer ownerABI doğrudan ABI'yi içeriyorsa şu şekilde kullanın:
+          // const owner = new web3Instance.eth.Contract(ownerABI, ownerContractAddress);
+  
+          setOwnerContract(owner);
+        } else {
+          alert('MetaMask is required!');
+        }
+      } catch (error) {
+        console.error('Error initializing Web3:', error);
+      }
+    };
+    initWeb3();
+  }, []);
 
-                // Contract instance
-                const contractAddress = '0x39b7B68e3e89d1dbBd8001a0806c411abBab7f13'; // Replace with your deployed contract address
-                const contract = initContract(OwnerABI.abi, contractAddress);
+  // Araç bilgilerini getirme
+  const handleGetVehicle = async () => {
+    try {
+      if (!vin || !ownerContract) {
+        return alert('Please enter a valid VIN.');
+      }
 
-                // Fetch vehicle data (example with VIN "VIN123")
-                const vehicle = await contract.methods.getVehicle('VIN123').call();
-                setVehicleData({
-                    vin: 'VIN123',
-                    plateNumber: vehicle[0],
-                    owner: vehicle[1],
-                });
-            } catch (error) {
-                setErrorMessage(error.message);
-                console.error('Error initializing:', error);
-            }
-        };
+      const vehicleData = await ownerContract.methods.vehicles(vin).call({
+        from: account, // İşlemi gönderen hesap
+        gas: 3000000,  // Gas limit
+      });
+      setVehicleInfo({
+        plateNumber: vehicleData[0], // Araç plakası
+        vin: vehicleData[1],         // Araç VIN (Vehicle Identification Number)
+        owner: vehicleData[2],       // Araç sahibi
+      });
+      setVehicleInfo({
+        plateNumber: vehicleData[0],
+        vin: vehicleData[1],
+        owner: vehicleData[2],
+      });
+      setError(null); // Hata mesajını temizle
+    } catch (err) {
+      console.error('Error fetching vehicle info:', err);
+      setError('Failed to fetch vehicle information. Please check the VIN or the contract.');
+    }
+  };
 
-        initialize();
-    }, []);
-
-    return (
+  return (
+    <div>
+      <h1>Buyer Home</h1>
+      <p>Connected Account: {account}</p>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter VIN"
+          value={vin}
+          onChange={(e) => setVin(e.target.value)}
+        />
+        <button onClick={handleGetVehicle}>Get Vehicle Info</button>
+      </div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {vehicleInfo && (
         <div>
-            <h1>Buyer Dashboard</h1>
-            {errorMessage && <p style={{ color: 'red' }}>Error: {errorMessage}</p>}
-            <p>Account: {account}</p>
-            {vehicleData ? (
-                <div>
-                    <h2>Vehicle Information</h2>
-                    <p>VIN: {vehicleData.vin}</p>
-                    <p>Plate Number: {vehicleData.plateNumber}</p>
-                    <p>Owner: {vehicleData.owner}</p>
-                </div>
-            ) : (
-                <p>Loading vehicle information...</p>
-            )}
+          <h3>Vehicle Info</h3>
+          <p>Plate Number: {vehicleInfo.plateNumber}</p>
+          <p>VIN: {vehicleInfo.vin}</p>
+          <p>Owner: {vehicleInfo.owner}</p>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
-export default BuyerDashboard;
+export default BuyerHome;

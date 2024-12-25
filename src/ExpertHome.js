@@ -60,7 +60,7 @@ function ExpertHome() {
     return (
         <div>
             <h2>Welcome to the Expert Dashboard!</h2>
-            <h3>File Upload using React!</h3>
+            <h3>After you choose folder, please use upload button</h3>
             <div>
                 <input type="file" onChange={onFileChange} />
                 <button onClick={onFileUpload}>Upload!</button>
