@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
-import ownerABI from './contracts/Owner.json'; // Doğru klasörden ABI'yi import edin
+import ownerABI from '../contracts/Owner.json'; // Doğru klasörden ABI'yi import edin
 
 // Kontrat adresinizi buraya ekleyin
 const ownerContractAddress = "0x39b7b68e3e89d1dbbd8001a0806c411abbab7f13"; // Owner kontratının gerçek adresi

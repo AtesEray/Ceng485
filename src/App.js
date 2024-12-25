@@ -4,9 +4,9 @@ import Web3 from 'web3';
 import './App.css';
 import Login from './Login';
 import Register from './Register';
-import BuyerHome from './BuyerHome';
-import SellerHome from './SellerHome';
-import ExpertHome from './ExpertHome';
+import BuyerHome from './pages/BuyerHome';
+import SellerHome from './pages/SellerHome';
+import ExpertHome from './pages/ExpertHome';
 
 
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
-import SellerABI from './contracts/Seller.json'; // Correct path to the Seller ABI
+import SellerABI from '../contracts/Seller.json'; // Correct path to the Seller ABI
 
 // Kontrat adresinizi buraya ekleyin
-const sellerContractAddress = "0x39b7b68e3e89d1dbbd8001a0806c411abbab7f13"; // Replace with your actual contract address
+const sellerContractAddress = "0x17d86102230B5944D9c5F34ed4D88DB64207c86E"; // Replace with your actual contract address
 
 const SellerDashboard = () => {
   const [web3, setWeb3] = useState(null);
