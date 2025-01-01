@@ -1,0 +1,104 @@
+/* SellerDashboard.css */
+.seller-dashboard-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.seller-dashboard-title {
+  font-size: 2em;
+  text-align: center;
+  color: #333;
+}
+
+.account-info {
+  font-size: 1.2em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.vin-selection {
+  text-align: center;
+}
+
+.vin-buttons {
+  margin-top: 20px;
+}
+
+.vin-button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.vin-button:hover {
+  background-color: #007B9E;
+}
+
+.vin-input-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.vin-input-section input {
+  padding: 10px;
+  font-size: 1em;
+  width: 250px;
+  margin-right: 10px;
+}
+
+.get-listing-btn {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.get-listing-btn:hover {
+  background-color: #45a049;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.vehicle-listing-info {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.vehicle-listing-info h3 {
+  font-size: 1.5em;
+}
+
+.view-vehicle-details-btn {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.view-vehicle-details-btn:hover {
+  background-color: #007B9E;
+}

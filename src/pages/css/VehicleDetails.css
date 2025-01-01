@@ -1,0 +1,26 @@
+/* VehicleDetails.css */
+.vehicle-details-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: auto;
+  }
+  
+  .vehicle-details-container h1 {
+    font-size: 2em;
+    text-align: center;
+  }
+  
+  .vehicle-info {
+    margin-top: 20px;
+    font-size: 1.2em;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    font-size: 1.2em;
+  }
+  

@@ -7,6 +7,7 @@ import Register from './Register';
 import BuyerHome from './pages/BuyerHome';
 import SellerHome from './pages/SellerHome';
 import ExpertHome from './pages/ExpertHome';
+import VehicleDetails from './pages/VehicleDetails';
 
 
 
@@ -83,6 +84,8 @@ function App() {
           <Route path="/buyer-home" element={<BuyerHome />} />
           <Route path="/seller-home" element={<SellerHome />} />
           <Route path="/expert-home" element={<ExpertHome />} />
+          <Route path="/vehicle/:vin" element={<VehicleDetails />} /> {/* Dynamic VIN route */}
+
         </Routes>
       </div>
     </Router>

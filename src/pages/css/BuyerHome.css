@@ -1,0 +1,95 @@
+.buyer-home-container {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .buyer-home-title {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+  
+  .account-info {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+  }
+  
+  .vin-selection {
+    margin-bottom: 30px;
+  }
+  
+  .vin-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+  .vin-button {
+    background-color: #3498db;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .vin-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .vin-input {
+    margin-top: 20px;
+  }
+  
+  .vin-input input {
+    padding: 10px;
+    font-size: 1rem;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .get-vehicle-btn {
+    background-color: #2ecc71;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .get-vehicle-btn:hover {
+    background-color: #27ae60;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 1rem;
+  }
+  
+  .vehicle-info {
+    margin-top: 30px;
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vehicle-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .vehicle-info p {
+    font-size: 1.1rem;
+    color: #34495e;
+  }
+  
