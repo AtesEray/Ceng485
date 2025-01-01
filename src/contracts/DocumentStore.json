@@ -1,0 +1,76 @@
+{
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "ipfsHash",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          }
+        ],
+        "name": "addDocument",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+          }
+        ],
+        "name": "getDocument",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "documents",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "ipfsHash",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "uploader",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],
+    "bytecode": "0x608060405234801561001057600080fd5b50610436806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063545b580e14610030578063b1698fe314610076578063d7e93e80146100b6575b600080fd5b61007e60048036038101906100799190610173565b6100c3565b005b6100b460048036038101906100af91906101a0565b6100cc565b005b6100c460048036038101906100bf91906101ce565b6100e0565b005b60005481565b8060008190555050565b806000819055507f462070656f706c65206861766520667265652061636365737320746f20746869736000565b610146565b60008135905061015681610328565b92915050565b60006020828403121561017257600080fd5b60006101808482850161014f565b91505092915050565b6000806040838503121561019e57600080fd5b60006101ac85828601610156565b92505060206101bd85828601610156565b9150509250929050565b6101d181610268565b82525050565b60006020820190506101ec60008301846101c8565b92915050565b60008115159050919050565b61020b81610268565b811461021657600080fd5b50565b6000819050919050565b60005b8381101561023b578082015181840152602081019050610220565b8381111561024a576000848401525b50505050565b61025981610268565b810181811067ffffffffffffffff821117156102785761027761025b565b5b80604052505050565b600061028d610268565b90506102998282610282565b919050565b600067ffffffffffffffff8211156102bd576102bc61025b565b5b602082029050602081019050919050565b600081905091905056fea264697066735822122038d4c82c3618b5da33cb7e8b57d5f48b2fa5c91b69351d0168e4cda03e89a8be64736f6c634300080a0033"
+  }
+  

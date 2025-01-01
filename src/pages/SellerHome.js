@@ -1,96 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import Web3 from 'web3';
-import sellerABI from '../contracts/Seller.json'; // Import the correct ABI for Seller contract
+import React, { useEffect, useState } from "react";
+import Web3 from "web3";
+import DocumentStoreABI from "../contracts/DocumentStore.json"; // Kontrat ABI
+const contractAddress = "0xAEb8C2134f21E48E5C90b3a7885A9332DA3d287e"; // DocumentStore kontrat adresi
 
-const sellerContractAddress = "0x17d86102230B5944D9c5F34ed4D88DB64207c86E"; // Replace with actual seller contract address
-
-const SellerDashboard = () => {
+const SellerHome = () => {
   const [web3, setWeb3] = useState(null);
   const [account, setAccount] = useState(null);
-  const [sellerContract, setSellerContract] = useState(null);
-  const [vin, setVin] = useState('');
-  const [vehicleListing, setVehicleListing] = useState(null);
+  const [contract, setContract] = useState(null);
   const [error, setError] = useState(null);
 
+  // MetaMask ve kontrata bağlanma
+  const connectBlockchain = async () => {
+    try {
+      if (window.ethereum) {
+        const web3Instance = new Web3(window.ethereum);
+        const accounts = await web3Instance.eth.requestAccounts();
+        setWeb3(web3Instance);
+        setAccount(accounts[0]);
 
-  // Web3 and contract initialization
-  useEffect(() => {
-    const initWeb3 = async () => {
-      try {
-        if (window.ethereum) {
-          const web3Instance = new Web3(window.ethereum);
-          await window.ethereum.request({ method: 'eth_requestAccounts' });  // Request accounts access
+        const contractInstance = new web3Instance.eth.Contract(
+          DocumentStoreABI.abi,
+          contractAddress
+        );
+        setContract(contractInstance);
 
-          const accounts = await web3Instance.eth.getAccounts();
-          setWeb3(web3Instance);
-          setAccount(accounts[0]);
-
-          const seller = new web3Instance.eth.Contract(sellerABI.abi, sellerContractAddress);
-          setSellerContract(seller);
-        } else {
-          alert('MetaMask is required!');
-        }
-      } catch (error) {
-        console.error('Error initializing Web3:', error);
-        setError('Failed to initialize Web3. Make sure MetaMask is installed and connected.');
+        console.log("Connected to Blockchain with account:", accounts[0]);
+        alert(`Connected to Blockchain with account: ${accounts[0]}`);
+      } else {
+        alert("MetaMask is required!");
       }
-    };
-    initWeb3();
+    } catch (err) {
+      console.error("Error connecting to Blockchain:", err);
+      setError("Failed to connect to Blockchain. Please check MetaMask.");
+    }
+  };
+
+  // MetaMask hesap değişikliklerini dinle
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", (accounts) => {
+        if (accounts.length > 0) {
+          setAccount(accounts[0]);
+          console.log("MetaMask account changed:", accounts[0]);
+          alert(`Account switched to: ${accounts[0]}`);
+        } else {
+          setAccount(null);
+          console.log("No MetaMask account connected.");
+        }
+      });
+    }
   }, []);
 
-  const handleGetListing = async () => {
-    try {
-      if (!vin || !sellerContract) {
-        return alert('Please enter a valid VIN.');
-      }
-
-      const listingData = await sellerContract.methods.listings(vin).call({
-        from: account, // Sender account
-        gas: 3000000,  // Gas limit
+  // Manuel olarak hesabı güncelleme
+  const updateAccount = async () => {
+    if (window.ethereum) {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
       });
-
-      if (!listingData.isActive) {
-        setError('This vehicle is not listed for sale.');
-        return;
+      if (accounts.length > 0) {
+        setAccount(accounts[0]);
+        alert(`Account updated to: ${accounts[0]}`);
+      } else {
+        alert("No accounts found.");
       }
-
-      setVehicleListing({
-        vin ,
-        price: listingData.price,
-        isActive: listingData.isActive,
-      });
-
-      setError(null); // Clear any error message
-    } catch (err) {
-      console.error('Error fetching listing data:', err);
-      setError('Failed to fetch listing. Please check the VIN or the contract.');
     }
   };
 
   return (
     <div>
-      <h1>Seller Dashboard</h1>
+      <h1>Seller Home</h1>
+      <button onClick={connectBlockchain}>Connect to Blockchain</button>
+      <button onClick={updateAccount}>Update Account</button>
       <p>Connected Account: {account}</p>
-      <div>
-        <input
-          type="text"
-          placeholder="Enter VIN"
-          value={vin}
-          onChange={(e) => setVin(e.target.value)}
-        />
-        <button onClick={handleGetListing}>Get Vehicle Listing</button>
-      </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {vehicleListing && (
-        <div>
-          <h3>Vehicle Listing</h3>
-          <p>VIN: {vehicleListing.vin}</p>
-          <p>Price: {web3.utils.fromWei(vehicleListing.price.toString(), 'ether')} ETH</p>
-          <p>Status: {vehicleListing.isActive ? 'Active' : 'Inactive'}</p>
-        </div>
-      )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };
 
-export default SellerDashboard;
+export default SellerHome;
